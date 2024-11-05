@@ -1,4 +1,4 @@
-package fr.inria.gforge.spoon
+package com.github.e1roy
 
 import org.gradle.api.file.FileCollection
 import spoon.processing.Processor

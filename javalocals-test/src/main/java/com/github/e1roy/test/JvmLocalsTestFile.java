@@ -1,4 +1,4 @@
-package com.github.e1roy;
+package com.github.e1roy.test;
 
 import java.util.Arrays;
 import java.util.List;

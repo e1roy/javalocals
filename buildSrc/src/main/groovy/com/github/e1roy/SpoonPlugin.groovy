@@ -1,4 +1,4 @@
-package fr.inria.gforge.spoon
+package com.github.e1roy
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project

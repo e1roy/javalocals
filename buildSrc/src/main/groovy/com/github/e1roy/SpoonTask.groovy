@@ -1,13 +1,13 @@
-package fr.inria.gforge.spoon
+package com.github.e1roy
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.Classpath
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Internal
-import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import spoon.Launcher
-import org.gradle.api.tasks.Input
+
 class SpoonTask extends DefaultTask {
     @Internal
     def String[] srcFolders = []

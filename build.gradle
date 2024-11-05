@@ -4,11 +4,11 @@ apply plugin: 'spoon'
 group = 'com.github.e1roy'
 version = '1.0-SNAPSHOT'
 
-spoon {
-    compileOriginalSources false
-    compliance 11
-    processors = ['com.github.e1roy.JavaLocalsProcessor']
-}
+//spoon {
+//    compileOriginalSources false
+//    compliance 11
+//    processors = ['com.github.e1roy.JavaLocalsProcessor']
+//}
 
 repositories {
     maven {

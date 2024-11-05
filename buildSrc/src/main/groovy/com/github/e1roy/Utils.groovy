@@ -1,7 +1,4 @@
-package fr.inria.gforge.spoon
-
-import fr.inria.gforge.spoon.internal.SdkLoader
-import org.gradle.api.Project
+package com.github.e1roy
 
 final class Utils {
     /**
