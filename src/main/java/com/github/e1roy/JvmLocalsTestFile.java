@@ -32,6 +32,7 @@ public class JvmLocalsTestFile {
             int z = y + 100;
             printLocals();
         };
+        consumer.accept(999);
         printLocals();
     }
 

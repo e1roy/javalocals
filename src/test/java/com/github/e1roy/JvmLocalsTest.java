@@ -11,5 +11,6 @@ public class JvmLocalsTest {
     @Test
     public void JvmLocalsTestFile1() {
         new JvmLocalsTestFile().add(1, 2);
+        new JvmLocalsTestFile().testLambda();
     }
 }
