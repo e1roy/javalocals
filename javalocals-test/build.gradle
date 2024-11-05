@@ -1,0 +1,27 @@
+apply plugin: 'java'
+apply plugin: 'spoon'
+
+group = 'com.github.e1roy'
+version = '1.0-SNAPSHOT'
+
+spoon {
+    compileOriginalSources false
+    compliance 11
+    processors = ['com.github.e1roy.JavaLocalsProcessor']
+}
+
+repositories {
+    maven {
+        url "https://maven.aliyun.com/repository/public"
+    }
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
