@@ -17,7 +17,7 @@ class SpoonPlugin implements Plugin<Project> {
         // Adds task before the evaluation of the project to access of values
         // overloaded by the developer.
         project.afterEvaluate({
-            println "=================== Spoon plugin is running ==================="
+            println "-- Spoon plugin is running --"
             def compileJavaTask = project.getTasksByName("compileJava", true).first();
 
             SpoonExtension conf = project.spoon;
@@ -28,8 +28,9 @@ class SpoonPlugin implements Plugin<Project> {
                 } else {
                     sourceFolders = Utils.transformListFileToListString(project, conf.srcFolders)
                 }
+                // 默认路径
                 if (!conf.outFolder) {
-                    conf.outFolder = project.file("${project.buildDir}/generated")
+                    conf.outFolder = project.file("${project.buildDir}/generated-spoon")
                 }
 
                 srcFolders = sourceFolders
@@ -44,13 +45,13 @@ class SpoonPlugin implements Plugin<Project> {
 
             // Changes source folder if the user don't would like use the original source.
             if (!conf.compileOriginalSources) {
+                // 更新源代码的路径, 使用编译后的代码生成
                 compileJavaTask.source = conf.outFolder
             }
             // Inserts spoon task before compiling.
             compileJavaTask.dependsOn spoonTask
 
-            println "=================== Spoon plugin is running done ==================="
-
+            println "-- Spoon plugin is running done --"
         })
     }
 }

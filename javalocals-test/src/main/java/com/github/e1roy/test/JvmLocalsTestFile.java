@@ -10,6 +10,11 @@ import java.util.function.Consumer;
  */
 public class JvmLocalsTestFile {
 
+    public static void main(String[] args) {
+        new JvmLocalsTestFile().add(1, 2);
+        new JvmLocalsTestFile().testLambda();
+    }
+
     private static int staticVar = 5;
     private int instanceVar = 10;
 

@@ -15,9 +15,7 @@
             </builds>
           </compositeBuild>
         </compositeConfiguration>
-        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="$PROJECT_DIR$/../../programs/gradle-8.7" />
         <option name="gradleJvm" value="21" />
         <option name="modules">
           <set>
