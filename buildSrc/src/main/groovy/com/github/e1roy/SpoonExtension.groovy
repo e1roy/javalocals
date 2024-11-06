@@ -5,6 +5,7 @@ import spoon.processing.Processor
 
 class SpoonExtension {
     /** True to active the debug mode. */
+    boolean enable
     boolean debug
 
     /** Input directories for Spoon. */

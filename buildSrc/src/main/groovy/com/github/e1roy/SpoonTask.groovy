@@ -2,35 +2,88 @@ package com.github.e1roy
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.FileCollection
-import org.gradle.api.tasks.Classpath
-import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.Internal
-import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.*
+import org.gradle.work.FileChange
+import org.gradle.work.InputChanges
 import spoon.Launcher
 
 class SpoonTask extends DefaultTask {
+
     @Internal
-    def String[] srcFolders = []
-    @Internal
+    def srcFolders = []
+
+    @InputFiles
+    @SkipWhenEmpty
+    @PathSensitive(PathSensitivity.RELATIVE)
+    FileCollection sourceFileCollection;
+
+    @OutputDirectory
     def File outFolder
+
     @Input
     def boolean preserveFormatting
+
     @Input
     def boolean noClasspath
+
     @Input
     def String[] processors = []
+
     @Classpath
     def FileCollection classpath
+
     @Input
     def int compliance
 
+//    @InputFiles
+//    private FileCollection inputFiles;
+//
+//    public void setInputFiles(FileCollection inputFiles) {
+//        this.inputFiles = inputFiles;
+//    }
+//
+//    public FileCollection getInputFiles() {
+//        return inputFiles
+//    }
+
     @TaskAction
-    void run() {
+    void run(InputChanges inputChanges) {
         println "=================== Spoon task is running ==================="
+        try {
+            doRun(inputChanges)
+        } catch (Exception e) {
+            e.printStackTrace()
+            throw new RuntimeException("Error while running spoon task", e)
+        }
+        println "=================== Spoon task is running done ==================="
+    }
+
+    void doRun(InputChanges inputChanges) {
         def log = project.logger
         printEnvironment(log.&debug)
         if (project.spoon.debug) {
             printEnvironment(System.out.&println)
+        }
+
+        def changes = inputChanges.getFileChanges(sourceFileCollection)
+        StringBuilder filePathBb = new StringBuilder()
+
+        if (changes == null || changes.size() == 0) {
+            println "No changes detected."
+            return
+        }
+
+        if (changes != null && changes.size() > 0) {
+            changes.each { FileChange change ->
+                println "File change: ${change.file}"
+            }
+            var fileItr = changes.iterator()
+            while (fileItr.hasNext()) {
+                filePathBb.append(fileItr.next().file.getAbsolutePath())
+                if (fileItr.hasNext()) {
+                    filePathBb.append(File.pathSeparator)
+                }
+            }
         }
 
         // No source code to spoon.
@@ -39,7 +92,9 @@ class SpoonTask extends DefaultTask {
         }
         List<String> params = new LinkedList<>()
 
-        addParam(params, '-i', srcFolders.join(':'))
+//        def files = srcFolders.getFiles()
+
+        addParam(params, '-i', filePathBb.toString())
         addParam(params, '-o', outFolder.getAbsolutePath())
         addParam(params, '--compliance', '' + compliance)
         if (preserveFormatting) {
@@ -58,6 +113,7 @@ class SpoonTask extends DefaultTask {
         def launcher = new Launcher()
         launcher.setArgs(params.toArray(new String[params.size()]))
         launcher.run()
+        Thread.sleep(1 * 1000)
     }
 
     private printEnvironment(printer) {

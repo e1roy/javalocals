@@ -5,6 +5,7 @@ group = 'com.github.e1roy'
 version = '1.0-SNAPSHOT'
 
 spoon {
+    enable true
     compileOriginalSources false
     compliance 11
     processors = ['com.github.e1roy.JavaLocalsProcessor']
