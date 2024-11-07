@@ -35,5 +35,10 @@ class SpoonExtension {
     /**
      * Spoon goal either Generate classes or run checks on the code.
      */
-   SpoonTaskType goal = SpoonTaskType.GENERATE
+   TaskType goal = TaskType.GENERATE
+
+    /**
+     * 需要填充的方法名称(TODO 需要修改成全限定名称)
+     */
+    String fillMethodName = "printLocals"
 }

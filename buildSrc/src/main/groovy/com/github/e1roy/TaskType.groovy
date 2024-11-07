@@ -1,5 +1,5 @@
 package com.github.e1roy
 
-enum SpoonTaskType {
+enum TaskType {
     GENERATE, CHECK
 }

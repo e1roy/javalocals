@@ -9,6 +9,7 @@ javaLocals {
     compileOriginalSources false    // Compile original sources (default: false)
     compliance 11                   // Compliance level (default: 7)
     processors = ['com.github.e1roy.JavaLocalsProcessor']       // Processors (default: [])
+    fillMethodName = "printLocals"     // Fill methods (default: "")
 }
 
 repositories {

@@ -15,7 +15,16 @@ import java.util.List;
  */
 public class JavaLocalsProcessor extends AbstractProcessor<CtMethod> {
 
-    private int count = 0;
+    int count = 0;
+    static String fillMethodName = "printLocals";
+
+    public JavaLocalsProcessor() {
+//        new RuntimeException().printStackTrace();
+    }
+
+    public void setFillMethodName(String fillMethodName) {
+        this.fillMethodName = fillMethodName;
+    }
 
     @Override
     public void process(CtMethod method) {
@@ -30,7 +39,7 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtMethod> {
     }
 
 
-    class VariableCollectorVisitor extends CtScanner {
+    static class VariableCollectorVisitor extends CtScanner {
         private List<CtVariableReference<?>> variablesInScope = new ArrayList<>();
         private boolean isForLoop = false;
 
@@ -80,7 +89,7 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtMethod> {
 
         @Override
         public <T> void visitCtInvocation(CtInvocation<T> invocation) {
-            if (invocation.getExecutable().getSimpleName().equals("printLocals")) {
+            if (invocation.getExecutable().getSimpleName().equals(fillMethodName)) {
                 // Set arguments to the variables currently in scope
                 List<CtVariableReference<?>> vars = new ArrayList<>(variablesInScope);
                 List<CtExpression<?>> args = new ArrayList<>();

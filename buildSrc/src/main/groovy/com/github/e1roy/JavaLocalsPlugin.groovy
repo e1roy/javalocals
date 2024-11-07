@@ -46,6 +46,7 @@ class JavaLocalsPlugin implements Plugin<Project> {
                 preserveFormatting = conf.preserveFormatting
                 noClasspath = conf.noClasspath
                 processors = conf.processors
+                fillMethodName = conf.fillMethodName
                 classpath = compileJavaTask.classpath
                 compliance = conf.compliance
             }

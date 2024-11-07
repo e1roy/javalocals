@@ -35,6 +35,9 @@ class JavaLocalsTask extends DefaultTask {
     @Input
     def int compliance
 
+    @Input
+    def String fillMethodName;
+
 //    @InputFiles
 //    private FileCollection inputFiles;
 //
@@ -110,7 +113,8 @@ class JavaLocalsTask extends DefaultTask {
             addParam(params, '--source-classpath', classpath.asPath)
         }
 
-        def launcher = new Launcher()
+        def launcher = new JavaLocalsSpoonLauncher()
+        launcher.setFillMethodName(this.fillMethodName)
         launcher.setArgs(params.toArray(new String[params.size()]))
         launcher.run()
         Thread.sleep(1 * 1000)
