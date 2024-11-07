@@ -32,19 +32,17 @@ public class MethodArgsTest {
     @Test
     public void testAdd() {
         launcher = new JavaLocalsSpoonLauncher();
+        def launcherHelper = new Helper(launcher)
+
         String className = "MethodArgsFile"
-        launcher.addInputResource(Utils.getJavaSpoonFile(className))
-        launcher.buildModel();
-        Factory factory = launcher.getFactory();
-        def printer = factory.getEnvironment().createPrettyPrinter();
+        launcherHelper.addInputResource(Utils.getJavaSpoonFile(className))
+        launcherHelper.buildModel();
 
         AbstractProcessor processor = new JavaLocalsProcessor();
-        processor.setFactory(factory);
-
-        def ctClass = launcher.getFactory().Class().get(className)
+        def ctClass = launcherHelper.getClass(className)
         processor.processCtClass(ctClass);
 
-        def outputClassSource = printer.prettyprint(ctClass)
+        def outputClassSource = launcherHelper.prettyPrint(ctClass)
         assertThat(outputClassSource).contains("printLocals(a, b, args, c)")
     }
 
