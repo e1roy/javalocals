@@ -131,7 +131,7 @@ class JavaLocalsTask extends DefaultTask {
         printer "----------------------------------------"
     }
 
-    private static void addParam(params, key, value) {
+    private static void addParam(List params, key, value) {
         addKey(params, key)
         params.add(value)
     }
