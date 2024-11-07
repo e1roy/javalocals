@@ -7,7 +7,7 @@ import org.gradle.work.FileChange
 import org.gradle.work.InputChanges
 import spoon.Launcher
 
-class SpoonTask extends DefaultTask {
+class JavaLocalsTask extends DefaultTask {
 
     @Internal
     def srcFolders = []

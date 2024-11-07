@@ -2,10 +2,9 @@ package com.github.e1roy
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.file.FileCollection
 import org.gradle.api.plugins.JavaPlugin
 
-class SpoonPlugin implements Plugin<Project> {
+class JavaLocalsPlugin implements Plugin<Project> {
 
     @Override
     void apply(final Project project) {
@@ -13,32 +12,25 @@ class SpoonPlugin implements Plugin<Project> {
         if (!hasJavaPlugin) {
             throw new IllegalStateException('The java plugin is required')
         }
-
-        project.extensions.create "javaLocals", SpoonExtension
-
-        // Adds task before the evaluation of the project to access of values
-        // overloaded by the developer.
+        // 解析配置文件
+        project.extensions.create("javaLocals", SpoonExtension)
+        // evaluate 阶段, 注册一个task, 在编译之前执行
         project.afterEvaluate({
-            println "-- Spoon plugin is running --"
+            println "-- Spoon plugin --"
             def compileJavaTask = project.getTasksByName("compileJava", true).first();
-
             SpoonExtension conf = project.javaLocals;
-
+            // 多project的情况下, 不同的project可以有不同的配置
             if (!conf.enable) {
                 return
             }
-
-            def spoonTask = project.task('javaLocalsTransform', type: SpoonTask) {
+            def spoonTask = project.task('javaLocalsTransform', type: JavaLocalsTask) {
                 def sourceFolders = [];
-                def sourceFileCollection1;
+                def compileJavaSourceFileCollection;
                 if (!conf.srcFolders) {
-                    sourceFolders = Utils.transformListFileToListString(project, project.sourceSets.main.java.srcDirs)
+//                    sourceFolders = Utils.transformListFileToListString(project, project.sourceSets.main.java.srcDirs)
                     sourceFolders = project.sourceSets.main.java.srcDirs
-
-                    def srcDirs = project.sourceSets.main.java.srcDirs
-                    sourceFileCollection1 = project.files(srcDirs)
-
-//                    sourceFileCollection1 = compileJavaTask.source
+//                    def srcDirs = project.sourceSets.main.java.srcDirs
+                    compileJavaSourceFileCollection = compileJavaTask.source
                 } else {
                     sourceFolders = Utils.transformListFileToListString(project, conf.srcFolders)
                 }
@@ -48,7 +40,7 @@ class SpoonPlugin implements Plugin<Project> {
                 }
 
                 srcFolders = sourceFolders
-                sourceFileCollection = sourceFileCollection1
+                sourceFileCollection = compileJavaSourceFileCollection
                 outFolder = conf.outFolder
                 println "outFolder: ${outFolder}"
                 preserveFormatting = conf.preserveFormatting
@@ -58,16 +50,13 @@ class SpoonPlugin implements Plugin<Project> {
                 compliance = conf.compliance
             }
 
-            // Changes source folder if the user don't would like use the original source.
             if (!conf.compileOriginalSources) {
                 // 更新源代码的路径, 使用编译后的代码生成
                 compileJavaTask.source = conf.outFolder
                 println "compileJavaTask.source: ${conf.outFolder.getAbsolutePath()}"
             }
-            // Inserts spoon task before compiling.
             compileJavaTask.dependsOn spoonTask
-
-            println "-- Spoon plugin is running done --"
+            println "-- Spoon plugin  done --"
         })
     }
 }
