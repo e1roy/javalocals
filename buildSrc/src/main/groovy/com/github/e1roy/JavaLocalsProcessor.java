@@ -2,6 +2,7 @@ package com.github.e1roy;
 
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.*;
+import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.declaration.CtParameter;
 import spoon.reflect.reference.CtVariableReference;
@@ -17,6 +18,7 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtMethod> {
 
     int count = 0;
     static String fillMethodName = "printLocals";
+    static boolean showLineNumber = false;
 
     public JavaLocalsProcessor() {
 //        new RuntimeException().printStackTrace();
@@ -31,6 +33,18 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtMethod> {
         count++;
         method.accept(new VariableCollectorVisitor());
     }
+
+    public void processCtClass(CtClass clazz) {
+        if (clazz == null) {
+            return;
+        }
+        count++;
+        for (Object method1 : clazz.getMethods()) {
+            CtMethod method = (CtMethod) method1;
+            method.accept(new VariableCollectorVisitor());
+        }
+    }
+
 
     @Override
     public void processingDone() {
@@ -94,7 +108,9 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtMethod> {
                 List<CtVariableReference<?>> vars = new ArrayList<>(variablesInScope);
                 List<CtExpression<?>> args = new ArrayList<>();
                 // 添加当前代码的行号作为第一个参数
-                args.add(invocation.getFactory().Code().createLiteral(invocation.getPosition().getLine()));
+                if (showLineNumber) {
+                    args.add(invocation.getFactory().Code().createLiteral(invocation.getPosition().getLine()));
+                }
                 for (CtVariableReference<?> varRef : vars) {
                     args.add(invocation.getFactory().Code().createVariableRead(varRef, false));
                 }

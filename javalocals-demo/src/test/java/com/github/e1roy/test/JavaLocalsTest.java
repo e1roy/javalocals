@@ -1,5 +1,6 @@
 package com.github.e1roy.test;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
@@ -9,12 +10,18 @@ import org.junit.jupiter.api.TestInfo;
  * @date 2024/11/6 星期三 1:41
  */
 public class JavaLocalsTest {
-    
+
+
     // 在执行每一个测试之前,打印测试的函数名称
     @BeforeEach
     public void printTestName(TestInfo testInfo) {
         System.out.println("* JvmLocalsTest." + testInfo.getDisplayName());
     }
+
+    @BeforeAll
+    public static void setUp() {
+    }
+
     @Test
     public void testAdd() {
         new DemoFile().add(1, 2);
