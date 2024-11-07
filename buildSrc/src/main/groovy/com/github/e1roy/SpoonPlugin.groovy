@@ -14,7 +14,7 @@ class SpoonPlugin implements Plugin<Project> {
             throw new IllegalStateException('The java plugin is required')
         }
 
-        project.extensions.create "spoon", SpoonExtension
+        project.extensions.create "javaLocals", SpoonExtension
 
         // Adds task before the evaluation of the project to access of values
         // overloaded by the developer.
@@ -22,13 +22,13 @@ class SpoonPlugin implements Plugin<Project> {
             println "-- Spoon plugin is running --"
             def compileJavaTask = project.getTasksByName("compileJava", true).first();
 
-            SpoonExtension conf = project.spoon;
+            SpoonExtension conf = project.javaLocals;
 
             if (!conf.enable) {
                 return
             }
 
-            def spoonTask = project.task('spoon000', type: SpoonTask) {
+            def spoonTask = project.task('javaLocalsTransform', type: SpoonTask) {
                 def sourceFolders = [];
                 def sourceFileCollection1;
                 if (!conf.srcFolders) {

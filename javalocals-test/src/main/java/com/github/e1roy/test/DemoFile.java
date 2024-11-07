@@ -8,11 +8,11 @@ import java.util.function.Consumer;
  * @author elroysu
  * @date 2024/10/31 星期四 1:13
  */
-public class JvmLocalsTestFile {
+public class DemoFile {
 
     public static void main(String[] args) {
-        new JvmLocalsTestFile().add(1, 2);
-        new JvmLocalsTestFile().testLambda();
+        new DemoFile().add(1, 2);
+        new DemoFile().testLambda();
     }
 
     private static int staticVar = 5;
@@ -183,8 +183,16 @@ public class JvmLocalsTestFile {
     }
 
     public static void printLocals(Object... objs) {
-        for (Object obj : objs) {
-            System.out.println("javaLocals : " + obj);
+        if (objs == null) {
+            return;
+        }
+        for (int i = 0; i < objs.length; i++) {
+            var obj = objs[i];
+            if (i == 0) {
+                System.out.println("line : " + obj);
+            } else {
+                System.out.println("javaLocals : " + obj);
+            }
         }
     }
 }

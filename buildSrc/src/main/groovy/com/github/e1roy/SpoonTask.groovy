@@ -61,7 +61,7 @@ class SpoonTask extends DefaultTask {
     void doRun(InputChanges inputChanges) {
         def log = project.logger
         printEnvironment(log.&debug)
-        if (project.spoon.debug) {
+        if (project.javaLocals.debug) {
             printEnvironment(System.out.&println)
         }
 

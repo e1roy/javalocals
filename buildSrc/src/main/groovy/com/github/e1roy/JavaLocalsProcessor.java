@@ -84,6 +84,8 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtMethod> {
                 // Set arguments to the variables currently in scope
                 List<CtVariableReference<?>> vars = new ArrayList<>(variablesInScope);
                 List<CtExpression<?>> args = new ArrayList<>();
+                // 添加当前代码的行号作为第一个参数
+                args.add(invocation.getFactory().Code().createLiteral(invocation.getPosition().getLine()));
                 for (CtVariableReference<?> varRef : vars) {
                     args.add(invocation.getFactory().Code().createVariableRead(varRef, false));
                 }
