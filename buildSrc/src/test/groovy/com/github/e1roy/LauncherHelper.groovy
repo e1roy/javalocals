@@ -1,18 +1,17 @@
 package com.github.e1roy
 
 import spoon.reflect.declaration.CtElement
-import spoon.reflect.factory.Factory
 
 /**
  * @author elroysu
  * @date 2024/11/8 星期五 0:46
  */
-class Helper {
+class LauncherHelper {
 
     @Delegate
     JavaLocalsSpoonLauncher launcher = null;
 
-    Helper(JavaLocalsSpoonLauncher launcher) {
+    LauncherHelper(JavaLocalsSpoonLauncher launcher) {
         this.launcher = launcher
     }
 

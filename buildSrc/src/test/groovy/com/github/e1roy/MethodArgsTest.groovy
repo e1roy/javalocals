@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import spoon.processing.AbstractProcessor
-import spoon.reflect.factory.Factory
 
 import static com.google.common.truth.Truth.assertThat
 
@@ -32,7 +31,7 @@ public class MethodArgsTest {
     @Test
     public void testAdd() {
         launcher = new JavaLocalsSpoonLauncher();
-        def launcherHelper = new Helper(launcher)
+        def launcherHelper = new LauncherHelper(launcher)
 
         String className = "MethodArgsFile"
         launcherHelper.addInputResource(Utils.getJavaSpoonFile(className))
