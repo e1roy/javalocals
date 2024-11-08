@@ -1,3 +1,5 @@
+package javaresource;
+
 public class MethodArgsFile {
 
     public void add(int a, int b, String... args) {
@@ -9,4 +11,5 @@ public class MethodArgsFile {
     public void printLocals() {
 
     }
+    
 }

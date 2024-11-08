@@ -1,11 +1,10 @@
 package com.github.e1roy
 
-
+import javaresource.MethodArgsFile
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
-import spoon.processing.AbstractProcessor
 
 import static com.google.common.truth.Truth.assertThat
 
@@ -15,34 +14,36 @@ import static com.google.common.truth.Truth.assertThat
  */
 public class MethodArgsTest {
 
-    JavaLocalsSpoonLauncher launcher = null;
+    static String classFileName = MethodArgsFile.class.getCanonicalName()
 
-    // 在执行每一个测试之前,打印测试的函数名称
+    LauncherTestHelper launcher = null;
+    ClassTestHelper classHelper = null
+
+    def setUp() {
+        if (launcher != null) {
+            return
+        }
+        launcher = new LauncherTestHelper(new JavaLocalsSpoonLauncher())
+        classHelper = new ClassTestHelper(launcher, classFileName)
+        classHelper.process(new JavaLocalsProcessor())
+    }
+
     @BeforeEach
-    public void printTestName(TestInfo testInfo) {
-        System.out.println("***** MethodArgsTest ." + testInfo.getDisplayName());
+    void beforeEach(TestInfo testInfo) {
+        setUp()
+        System.out.println("***** MethodArgsTest.${testInfo.getDisplayName()}");
     }
 
     @AfterEach
-    public void printTestEnd(TestInfo testInfo) {
-        System.out.println("***** MethodArgsTest ." + testInfo.getDisplayName() + " end");
+    void printTestEnd(TestInfo testInfo) {
+        println("\n***** MethodArgsTest.${testInfo.getDisplayName()} end")
     }
 
     @Test
-    public void testAdd() {
-        launcher = new JavaLocalsSpoonLauncher();
-        def launcherHelper = new LauncherHelper(launcher)
-
-        String className = "MethodArgsFile"
-        launcherHelper.addInputResource(Utils.getJavaSpoonFile(className))
-        launcherHelper.buildModel();
-
-        AbstractProcessor processor = new JavaLocalsProcessor();
-        def ctClass = launcherHelper.getClass(className)
-        processor.processCtClass(ctClass);
-
-        def outputClassSource = launcherHelper.prettyPrint(ctClass)
-        assertThat(outputClassSource).contains("printLocals(a, b, args, c)")
+    void testAdd() {
+        var methodAdd = classHelper.getCtMethod(MethodArgsFile.&add)
+        println methodAdd
+        assertThat(String.valueOf(methodAdd)).contains("printLocals(a, b, args, c)")
     }
 
 }

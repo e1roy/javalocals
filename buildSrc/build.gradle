@@ -27,3 +27,20 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+// 注册task, 在执行测试之前执行
+tasks.register('taskA') {
+    doLast {
+        println 'Executing taskA'
+        // 将javaresource目录下的文件复制到resources的目录下
+        copy {
+            from 'src/test/groovy/javaresource'
+            into 'src/test/resources/javaresource'
+        }
+    }
+}
+
+tasks.named('test') {
+    dependsOn tasks.named('taskA')
+    mustRunAfter tasks.named('taskA')
+}

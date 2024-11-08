@@ -1,16 +1,13 @@
 package com.github.e1roy;
 
 import spoon.support.compiler.FileSystemFile;
-import spoon.support.compiler.VirtualFile;
-
-import java.io.File;
-import java.net.URL;
+import spoon.support.compiler.VirtualFile
 
 /**
  * @author elroysu
  * @date 2024/11/8 星期五 0:37
  */
-public class Utils {
+public class TestUtils {
 
     public static String addJavaSub(String fileName) {
         if (fileName.endsWith(".java")) {
@@ -30,16 +27,21 @@ public class Utils {
     }
 
     public static File getFile(String resourceFileName) {
-
-        ClassLoader classLoader = Utils.class.getClassLoader();
-        URL resource = classLoader.getResource(resourceFileName);
+        // a.b.java -> a/b.java
+        def filePath = resourceFileName.replace(".", "/").replace("/java", ".java");
+        ClassLoader classLoader = TestUtils.class.getClassLoader();
+        URL resource = classLoader.getResource(filePath);
         if (resource == null) {
-            throw new IllegalArgumentException("file not found! " + resourceFileName);
+            throw new IllegalArgumentException("file not found! " + resourceFileName + " -> " + filePath);
         }
         return new File(resource.getFile());
     }
 
-    public VirtualFile getVirtualFile(String code) {
+    public static VirtualFile getVirtualFile(String code) {
         return new VirtualFile(code);
+    }
+
+    public static String getMethodName(methodClosure) {
+        return methodClosure.getMethod()
     }
 }
