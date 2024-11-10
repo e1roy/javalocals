@@ -34,7 +34,7 @@ tasks.register('taskA') {
         println 'Executing taskA'
         // 将javaresource目录下的文件复制到resources的目录下
         copy {
-            from 'src/test/groovy/javaresource'
+            from 'src/test/java/javaresource'
             into 'src/test/resources/javaresource'
         }
     }

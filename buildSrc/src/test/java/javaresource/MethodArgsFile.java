@@ -1,31 +1,20 @@
-package com.github.e1roy.test;
+package javaresource;
 
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-/**
- * @author elroysu
- * @date 2024/10/31 星期四 1:13
- */
-public class DemoFile {
+public class MethodArgsFile {
 
-    public static void main(String[] args) {
-        new DemoFile().add(1, 2);
-        new DemoFile().testLambda();
-    }
-
-    private static int staticVar = 5;
-    private int instanceVar = 10;
-
-    public void add(int a, int b) {
+    public void add(int a, int b, String... args) {
         int c = a + b;
         printLocals();
         int d = 0;
     }
 
-    public void testForLoop() {
+    public void loopFor() {
         for (int i = 0; i < 10; i++) {
             int loopVar = i * 2;
             printLocals();
@@ -42,7 +31,7 @@ public class DemoFile {
         printLocals();
     }
 
-    public void testAnonymousClass() {
+    public void anonymousClass() {
         Consumer<Integer> consumer = new Consumer<Integer>() {
             @Override
             public void accept(Integer i) {
@@ -53,21 +42,19 @@ public class DemoFile {
         printLocals();
     }
 
-    public void testIfElse() {
+    public void ifElse() {
         int a = 1;
-        int b = 2;
         if (a > 0) {
-            int positiveVar = a;
+            int a1 = a;
             printLocals();
         } else {
-            int negativeVar = -a;
+            int a2 = -a;
             printLocals();
         }
         printLocals();
     }
 
-    // tryCatchTest
-    public void testTryCatch() {
+    public void trtCatch() {
         int a = 200;
         try {
             int tryVar = 1;
@@ -82,39 +69,30 @@ public class DemoFile {
         printLocals();
     }
 
-    // shadowingTest
-    public void testShadowing() {
-        int var1 = 1;
+    public void varShadow() {
+        int a1 = 1;
         {
-            int var2 = 2;// 变量遮蔽
+            int a2 = 2;// 变量遮蔽
             printLocals();
         }
         printLocals();
     }
 
     // recursiveTest
-    public void recursiveTest(int n) {
+    public void recursive(int n) {
         int a = 100;
         if (n > 0) {
             int recursiveVar = n;
             printLocals();
-            recursiveTest(n - 1);
+            recursive(n - 1);
         }
         printLocals();
     }
 
-    // arrayAndCollectionTest
-    public void testArrayAndCollection() {
-        int a = 1;
-        int[] intArray = {1, 2, 3};
-        List<String> stringList = Arrays.asList("a", "b", "c");
-        printLocals();
-    }
-
     // switch case
-    public void testSwitchCase() {
-        int value = 100;
-        switch (value) {
+    public void switchCase() {
+        int a = 100;
+        switch (a) {
             case 1:
                 int caseOneVar = 1;
                 printLocals();
@@ -130,7 +108,8 @@ public class DemoFile {
         printLocals();
     }
 
-    public void testNestedLoops() {
+    public void nestedLoops() {
+        int a = 1;
         for (int i = 0; i < 3; i++) {
             int outerVar = i;
             for (int j = 0; j < 2; j++) {
@@ -141,15 +120,10 @@ public class DemoFile {
         }
     }
 
-    public void testMethodReference() {
-        List<String> list = Arrays.asList("A", "B", "C");
-        list.forEach(this::printString);
-        printLocals();
-    }
 
-    public void testStream() {
-        var list = Arrays.asList("1", "2", "3");
-        List<Integer> list1 = list.stream()
+    public void stream() {
+        List<Integer> list = Arrays.asList("1", "2", "3")
+                .stream()
                 .map(it1 -> Integer.valueOf(it1))
                 .filter(it2 -> it2 > 2)
                 .peek(it3 -> {
@@ -159,41 +133,26 @@ public class DemoFile {
         printLocals();
     }
 
-    private void printString(String s) {
-        printLocals();
-    }
-
-    public void testSwitchStatement(int value) {
-        Integer i = 100;
-        switch (value) {
-            case 1:
-                int caseVar1 = 100;
+    public void tryWithResource() {
+        int a = 1;
+        try (var b = new AutoCloseable() {
+            @Override
+            public void close() throws Exception {
+                int b1 = 1;
                 printLocals();
-                break;
-            case 2:
-                int caseVar2 = 200;
-                printLocals();
-                break;
-            default:
-                int defaultVar = 0;
-                printLocals();
-                break;
-        }
-        System.out.println();
-        printLocals();
-    }
-
-    public static void printLocals(Object... objs) {
-        if (objs == null) {
-            return;
-        }
-        for (int i = 0; i < objs.length; i++) {
-            var obj = objs[i];
-            if (i == 0) {
-                System.out.println("line : " + obj);
-            } else {
-                System.out.println("javaLocals : " + obj);
             }
+        }) {
+            int c = 2;
+            printLocals();
+        } catch (Exception e) {
+            int d = 3;
+            printLocals();
         }
+        printLocals();
     }
+
+    // #######################
+    public void printLocals() {
+    }
+
 }

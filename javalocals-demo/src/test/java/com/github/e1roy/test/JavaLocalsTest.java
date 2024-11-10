@@ -29,7 +29,7 @@ public class JavaLocalsTest {
 
     @Test
     public void testLambda() {
-        new DemoFile().testLambda();
+        new DemoFile().lambda();
     }
 
 }
