@@ -48,7 +48,7 @@ public class MethodArgsTest {
 
     @Test
     void loopFor() {
-        var methodAdd = classHelper.getCtMethod(MethodArgsFile.&loopFor)
+        var method = classHelper.getCtMethod(MethodArgsFile.&loopFor)
         var methodStr = String.valueOf(method)
         assertThat(methodStr).contains("printLocals(i, loopVar)")
         assertThat(methodStr).doesNotContain("printLocals(i)")
@@ -129,16 +129,6 @@ public class MethodArgsTest {
         assertThat(methodStr).doesNotContain "printLocals();"
     }
 
-    @Test
-    void tryWithResource() {
-        var method = classHelper.getCtMethod(MethodArgsFile.&tryWithResource)
-        var methodStr = String.valueOf(method)
-        println methodStr
-        // fixme 这里有bug
-        assertThat(methodStr).contains "printLocals(a, b1);"
-//        assertThat(methodStr).contains "printLocals(a);"
-        assertThat(methodStr).doesNotContain "printLocals();"
-    }
 
     @Test
     void nestedLoops() {
@@ -158,6 +148,26 @@ public class MethodArgsTest {
         assertThat(methodStr).contains "printLocals(it3, a);"
         assertThat(methodStr).contains "printLocals(list);"
         assertThat(methodStr).doesNotContain "printLocals();"
+    }
+
+
+    @Test
+    void tryWithResource() {
+        var method = classHelper.getCtMethod(MethodArgsFile.&tryWithResource)
+        var methodStr = String.valueOf(method)
+        println methodStr
+        assertThat(methodStr).contains ".printLocals(a, b1);"
+        assertThat(methodStr).contains "printLocals(b, c);"
+        assertThat(methodStr).contains "printLocals(b, d);"
+        assertThat(methodStr).contains "printLocals(a);"
+        assertThat(methodStr).doesNotContain "printLocals();"
+    }
+
+    @Test
+    void staticBlock() {
+        var ctClass = classHelper.ctClass
+        var methodStr = String.valueOf(ctClass)
+        println methodStr
     }
 
 

@@ -1,7 +1,6 @@
 package com.github.e1roy
 
 import org.apache.commons.collections4.CollectionUtils
-import org.codehaus.groovy.runtime.MethodClosure
 import spoon.reflect.declaration.CtClass
 import spoon.reflect.declaration.CtMethod;
 
@@ -28,7 +27,7 @@ public class ClassTestHelper {
         this.launcher.buildModel()
         this.ctClass = this.launcher.getClass(classFileName)
         this.processor = processor;
-        processor.processCtClass(ctClass);
+        processor.processCtClassForTest(ctClass);
         return this;
     }
 

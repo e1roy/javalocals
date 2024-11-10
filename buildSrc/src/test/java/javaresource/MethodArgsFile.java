@@ -1,12 +1,20 @@
 package javaresource;
 
-import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class MethodArgsFile {
+
+    static {
+        int a = 1;
+        printLocals();
+    }
+    {
+        int a = 1;
+        printLocals();
+    }
 
     public void add(int a, int b, String... args) {
         int c = a + b;
@@ -149,10 +157,11 @@ public class MethodArgsFile {
             printLocals();
         }
         printLocals();
+
     }
 
     // #######################
-    public void printLocals() {
+    public static void printLocals() {
     }
 
 }

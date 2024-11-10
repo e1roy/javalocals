@@ -10,10 +10,17 @@ import java.util.stream.Collectors;
  * @date 2024/10/31 星期四 1:13
  */
 public class DemoFile {
-
+    {
+        int a = 1;
+        printLocals();
+    }
+    static {
+        int staticA = 1;
+        printLocals();
+    }
     public static void main(String[] args) {
         new DemoFile().add(1, 2);
-        new DemoFile().testLambda();
+        new DemoFile().lambda();
     }
 
     private static int staticVar = 5;
