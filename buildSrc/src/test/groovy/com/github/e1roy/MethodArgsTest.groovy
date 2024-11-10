@@ -65,7 +65,7 @@ public class MethodArgsTest {
 
     @Test
     void anonymousClass() {
-        var method = classHelper.getCtMethod(MethodArgsFile.&anonymousClass)
+        var method = classHelper.getCtMethod(MethodArgsFile.&anonymousClass as Closure)
         var methodStr = String.valueOf(method)
         println methodStr
         assertThat(methodStr).contains("printLocals(i, z)")
