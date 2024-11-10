@@ -43,7 +43,6 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtClass> {
     @Override
     public void processingDone() {
         super.processingDone();
-        System.out.println("JavaLocalsProcessor done    " + count);
     }
 
 
@@ -101,9 +100,7 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtClass> {
 
         @Override
         public void visitCtTry(CtTry tryBlock) {
-            System.out.println("visitCtTry start ");
             super.visitCtTry(tryBlock);
-            System.out.println("visitCtTry end ");
         }
 
         @Override

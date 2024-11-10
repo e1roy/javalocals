@@ -6,8 +6,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 
-import static com.google.common.truth.Truth.assertThat
-
 /**
  * @author elroysu
  * @date 2024/11/7 星期四 23:07
@@ -40,70 +38,59 @@ public class MethodArgsTest {
     }
 
     @Test
+    void staticBlock() {
+        var ctClass = classHelper.ctClass
+        var ctClassStr = String.valueOf(ctClass)
+        validate(ctClassStr)
+    }
+
+    @Test
     void add() {
-        var methodAdd = classHelper.getCtMethod(MethodArgsFile.&add)
-        var methodStr = String.valueOf(methodAdd)
-        assertThat(methodStr).contains("printLocals(a, b, args, c)")
+        var method = classHelper.getCtMethod(MethodArgsFile.&add)
+        var methodStr = String.valueOf(method)
+        validate(methodStr)
     }
 
     @Test
     void loopFor() {
         var method = classHelper.getCtMethod(MethodArgsFile.&loopFor)
         var methodStr = String.valueOf(method)
-        assertThat(methodStr).contains("printLocals(i, loopVar)")
-        assertThat(methodStr).doesNotContain("printLocals(i)")
-        assertThat(methodStr).doesNotContain("printLocals(loopVar)")
+        validate(methodStr)
     }
 
     @Test
     void lambda() {
         var method = classHelper.getCtMethod(MethodArgsFile.&lambda)
         var methodStr = String.valueOf(method)
-        println methodStr
-        assertThat(methodStr).contains("printLocals(y, z)")
+        validate(methodStr)
     }
 
     @Test
     void anonymousClass() {
         var method = classHelper.getCtMethod(MethodArgsFile.&anonymousClass as Closure)
         var methodStr = String.valueOf(method)
-        println methodStr
-        assertThat(methodStr).contains("printLocals(i, z)")
-        assertThat(methodStr).contains("printLocals(consumer)")
-        assertThat(methodStr).doesNotContain("printLocals()")
+        validate(methodStr)
     }
 
     @Test
     void ifElse() {
         var method = classHelper.getCtMethod(MethodArgsFile.&ifElse)
         var methodStr = String.valueOf(method)
-        println methodStr
-        assertThat(methodStr).contains("printLocals(a, a1)")
-        assertThat(methodStr).contains("printLocals(a, a2);")
-        assertThat(methodStr).contains("printLocals(a);")
-        assertThat(methodStr).doesNotContain("printLocals();")
+        validate(methodStr)
     }
 
     @Test
     void trtCatch() {
         var method = classHelper.getCtMethod(MethodArgsFile.&trtCatch)
         var methodStr = String.valueOf(method)
-        println methodStr
-        assertThat(methodStr).contains "printLocals(a, tryVar);"
-        assertThat(methodStr).contains "printLocals(a, catchVar);"
-        assertThat(methodStr).contains "printLocals(a, finallyVar);"
-        assertThat(methodStr).contains "printLocals(a);"
-        assertThat(methodStr).doesNotContain "printLocals();"
+        validate(methodStr)
     }
 
     @Test
     void varShadow() {
         var method = classHelper.getCtMethod(MethodArgsFile.&varShadow)
         var methodStr = String.valueOf(method)
-        println methodStr
-        assertThat(methodStr).contains "printLocals(a1, a2);"
-        assertThat(methodStr).contains "printLocals(a1);"
-        assertThat(methodStr).doesNotContain "printLocals();"
+        validate(methodStr)
     }
 
     // recursive
@@ -111,22 +98,14 @@ public class MethodArgsTest {
     void recursive() {
         var method = classHelper.getCtMethod(MethodArgsFile.&recursive)
         var methodStr = String.valueOf(method)
-        println methodStr
-        assertThat(methodStr).contains "printLocals(n, a, recursiveVar);"
-        assertThat(methodStr).contains "printLocals(n, a);"
-        assertThat(methodStr).doesNotContain "printLocals();"
+        validate(methodStr)
     }
 
     @Test
     void switchCase() {
         var method = classHelper.getCtMethod(MethodArgsFile.&switchCase)
         var methodStr = String.valueOf(method)
-        println methodStr
-        assertThat(methodStr).contains "printLocals(a, caseOneVar);"
-        assertThat(methodStr).contains "printLocals(a, caseTwoVar);"
-        assertThat(methodStr).contains "printLocals(a, defaultVar);"
-        assertThat(methodStr).contains "printLocals(a);"
-        assertThat(methodStr).doesNotContain "printLocals();"
+        validate(methodStr)
     }
 
 
@@ -134,20 +113,14 @@ public class MethodArgsTest {
     void nestedLoops() {
         var method = classHelper.getCtMethod(MethodArgsFile.&nestedLoops)
         var methodStr = String.valueOf(method)
-        println methodStr
-        assertThat(methodStr).contains "printLocals(a, i, outerVar, j, innerVar);"
-        assertThat(methodStr).contains "printLocals(a, i, outerVar);"
-        assertThat(methodStr).doesNotContain "printLocals();"
+        validate(methodStr)
     }
 
     @Test
     void stream() {
         var method = classHelper.getCtMethod(MethodArgsFile.&stream)
         var methodStr = String.valueOf(method)
-        println methodStr
-        assertThat(methodStr).contains "printLocals(it3, a);"
-        assertThat(methodStr).contains "printLocals(list);"
-        assertThat(methodStr).doesNotContain "printLocals();"
+        validate(methodStr)
     }
 
 
@@ -155,20 +128,29 @@ public class MethodArgsTest {
     void tryWithResource() {
         var method = classHelper.getCtMethod(MethodArgsFile.&tryWithResource)
         var methodStr = String.valueOf(method)
-        println methodStr
-        assertThat(methodStr).contains ".printLocals(a, b1);"
-        assertThat(methodStr).contains "printLocals(b, c);"
-        assertThat(methodStr).contains "printLocals(b, d);"
-        assertThat(methodStr).contains "printLocals(a);"
-        assertThat(methodStr).doesNotContain "printLocals();"
+        validate(methodStr)
     }
 
-    @Test
-    void staticBlock() {
-        var ctClass = classHelper.ctClass
-        var methodStr = String.valueOf(ctClass)
-        println methodStr
-    }
 
+    static void validate(String data) {
+        String[] arr = data.split("\r\n")
+        for (var i = 0; i < arr.size(); i++) {
+            String line = arr[i].trim()
+            // println "line: $line"
+            if (line.startsWith("javaresource.MethodArgsFile.printLocals")) {
+                println line
+                if (i + 1 < arr.size()) {
+                    String nextLine = arr[i + 1].trim()
+                    println(nextLine)
+                    if (nextLine.startsWith("javaresource.MethodArgsFile.validateXXX")) {
+                        // 比较两个方法的参数是否一致
+                        if (!Objects.equals(line, nextLine.replace("validateXXX", "printLocals"))) {
+                            throw new RuntimeException("validate failed, line: \n ${line} -> \n ${nextLine} \n")
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 }

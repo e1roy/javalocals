@@ -5,20 +5,25 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("all")
 public class MethodArgsFile {
 
     static {
         int a = 1;
         printLocals();
+        validateXXX(a);
     }
+
     {
         int a = 1;
         printLocals();
+        validateXXX(a);
     }
 
     public void add(int a, int b, String... args) {
         int c = a + b;
         printLocals();
+        validateXXX(a, b, args, c);
         int d = 0;
     }
 
@@ -26,17 +31,21 @@ public class MethodArgsFile {
         for (int i = 0; i < 10; i++) {
             int loopVar = i * 2;
             printLocals();
+            validateXXX(i, loopVar);
         }
         printLocals();
+        validateXXX();
     }
 
     public void lambda() {
         Consumer<Integer> consumer = (y) -> {
             int z = y + 100;
             printLocals();
+            validateXXX(y, z);
         };
         consumer.accept(999);
         printLocals();
+        validateXXX(consumer);
     }
 
     public void anonymousClass() {
@@ -45,9 +54,11 @@ public class MethodArgsFile {
             public void accept(Integer i) {
                 int z = i + 100;
                 printLocals();
+                validateXXX(i, z);
             }
         };
         printLocals();
+        validateXXX(consumer);
     }
 
     public void ifElse() {
@@ -55,11 +66,14 @@ public class MethodArgsFile {
         if (a > 0) {
             int a1 = a;
             printLocals();
+            validateXXX(a, a1);
         } else {
             int a2 = -a;
             printLocals();
+            validateXXX(a, a2);
         }
         printLocals();
+        validateXXX(a);
     }
 
     public void trtCatch() {
@@ -67,14 +81,18 @@ public class MethodArgsFile {
         try {
             int tryVar = 1;
             printLocals();
+            validateXXX(a, tryVar);
         } catch (Exception e) {
             int catchVar = 2;
             printLocals();
+            validateXXX(a, e, catchVar);
         } finally {
             int finallyVar = 3;
             printLocals();
+            validateXXX(a, finallyVar);
         }
         printLocals();
+        validateXXX(a);
     }
 
     public void varShadow() {
@@ -82,8 +100,10 @@ public class MethodArgsFile {
         {
             int a2 = 2;// 变量遮蔽
             printLocals();
+            validateXXX(a1, a2);
         }
         printLocals();
+        validateXXX(a1);
     }
 
     // recursiveTest
@@ -92,9 +112,11 @@ public class MethodArgsFile {
         if (n > 0) {
             int recursiveVar = n;
             printLocals();
+            validateXXX(n, a, recursiveVar);
             recursive(n - 1);
         }
         printLocals();
+        validateXXX(n, a);
     }
 
     // switch case
@@ -104,16 +126,20 @@ public class MethodArgsFile {
             case 1:
                 int caseOneVar = 1;
                 printLocals();
+                validateXXX(a, caseOneVar);
                 break;
             case 2:
                 int caseTwoVar = 2;
                 printLocals();
+                validateXXX(a, caseTwoVar);
                 break;
             default:
                 int defaultVar = 0;
                 printLocals();
+                validateXXX(a, defaultVar);
         }
         printLocals();
+        validateXXX(a);
     }
 
     public void nestedLoops() {
@@ -123,8 +149,10 @@ public class MethodArgsFile {
             for (int j = 0; j < 2; j++) {
                 int innerVar = j;
                 printLocals();
+                validateXXX(a, i, outerVar, j, innerVar);
             }
             printLocals();
+            validateXXX(a, i, outerVar);
         }
     }
 
@@ -137,8 +165,10 @@ public class MethodArgsFile {
                 .peek(it3 -> {
                     int a = 200;
                     printLocals();
+                    validateXXX(it3, a);
                 }).collect(Collectors.toList());
         printLocals();
+        validateXXX(list);
     }
 
     public void tryWithResource() {
@@ -148,20 +178,28 @@ public class MethodArgsFile {
             public void close() throws Exception {
                 int b1 = 1;
                 printLocals();
+                validateXXX(a, b1);
             }
         }) {
             int c = 2;
             printLocals();
+            validateXXX(a, b, c);
         } catch (Exception e) {
             int d = 3;
             printLocals();
+            validateXXX(a, e, d);
         }
         printLocals();
-
+        validateXXX(a);
     }
 
     // #######################
-    public static void printLocals() {
+    public static Object printLocals(Object... args) {
+        return null;
+    }
+
+    public static Object validateXXX(Object... args) {
+        return null;
     }
 
 }
