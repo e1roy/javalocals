@@ -154,6 +154,22 @@ public class DemoFile {
                 printLocals();
             }
         }) {
+            // 嵌套try
+            try (var b2 = new AutoCloseable() {
+                @Override
+                public void close() throws Exception {
+                    int b1 = 1;
+                    printLocals();
+                }
+            }) {
+                int c = 2;
+                printLocals();
+            } catch (Exception tryWithResourceE) {
+                int d = 3;
+                printLocals();
+            }
+            // 嵌套try
+
             int c = 2;
             printLocals();
         } catch (Exception tryWithResourceE) {
