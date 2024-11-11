@@ -4,6 +4,13 @@
 当发生异常的时候/测试环境下, log的日志打印参数多少, 希望能够打印所有的上下文信息用于定位问题. 
 
 参考python的locals()函数,实现在java的log中打印所有的上下文信息.
+```python
+def add(a, b):
+    c = a + b 
+    print(locals()) # 输出 : {'a': 1, 'b': 2, 'c': 3}
+    return a + b
+add(1, 2)
+```
 
 ## 两种实现方式
 - 编译期间: `源代码.java` -> `修改后的源代码.java` -> `*.class`
