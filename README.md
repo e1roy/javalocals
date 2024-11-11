@@ -52,3 +52,7 @@ add(1, 2)
 - [ ] 测试一个较大的工程
 - [ ] 迁移jni的代码 : https://github.com/e1roy/jvmlocals
 - [ ] 打包gradle插件
+
+# 技术栈
+- spoon : 源代码解析和修改
+- gradle : 插件
