@@ -9,15 +9,15 @@ import java.util.stream.Collectors;
 public class MethodArgsFile {
 
     static {
-        int a = 1;
+        int staticA = 1;
         printLocals();
-        validateXXX("a", a);
+        validateXXX("staticA", staticA);
     }
 
     {
-        int a = 1;
+        int instanceA = 1;
         printLocals();
-        validateXXX("a", a);
+        validateXXX("instanceA", instanceA);
     }
 
     public void add(int a, int b, String... args) {

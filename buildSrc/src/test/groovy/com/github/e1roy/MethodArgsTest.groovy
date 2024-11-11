@@ -42,6 +42,7 @@ public class MethodArgsTest {
         var ctClass = classHelper.ctClass
         var ctClassStr = String.valueOf(ctClass)
         validate(ctClassStr)
+        println ctClassStr
     }
 
     @Test
@@ -137,12 +138,12 @@ public class MethodArgsTest {
         for (var i = 0; i < arr.size(); i++) {
             String line = arr[i].trim()
             // println "line: $line"
-            if (line.startsWith("javaresource.MethodArgsFile.printLocals")) {
+            if (line.contains("printLocals(\"")) {
                 println line
                 if (i + 1 < arr.size()) {
                     String nextLine = arr[i + 1].trim()
                     println(nextLine)
-                    if (nextLine.startsWith("javaresource.MethodArgsFile.validateXXX")) {
+                    if (nextLine.startsWith("validateXXX(\"")) {
                         // 比较两个方法的参数是否一致
                         if (!Objects.equals(line, nextLine.replace("validateXXX", "printLocals"))) {
                             throw new RuntimeException("validate failed, line: \n ${line} -> \n ${nextLine} \n")
