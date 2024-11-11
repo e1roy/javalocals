@@ -165,6 +165,9 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtClass> {
                     args.add(invocation.getFactory().Code().createLiteral(invocation.getPosition().getLine()));
                 }
                 for (CtVariableReference<?> varRef : variablesInScope) {
+                    // 获取变量名称
+                    String simpleName = varRef.getSimpleName();
+                    args.add(invocation.getFactory().Code().createLiteral(simpleName));
                     args.add(invocation.getFactory().Code().createVariableRead(varRef, false));
                 }
                 invocation.setArguments(args);
