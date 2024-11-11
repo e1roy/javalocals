@@ -9,7 +9,7 @@ import org.junit.jupiter.api.TestInfo;
  * @author elroysu
  * @date 2024/11/6 星期三 1:41
  */
-public class JavaLocalsTest {
+public class JavaLocalsDemoTest {
 
 
     // 在执行每一个测试之前,打印测试的函数名称

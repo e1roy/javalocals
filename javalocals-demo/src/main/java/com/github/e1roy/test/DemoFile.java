@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 public class DemoFile {
 
     static {
-        String a = "static block";
+        String a = "staticBlockValue";
         printLocals();
     }
 
     {
-        String a = "instance block";
+        String a = "instanceBlockValue";
         printLocals();
     }
 
