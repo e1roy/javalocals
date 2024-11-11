@@ -41,5 +41,7 @@
 
 # TODO
 - [x] 增加测试用例
-- [ ] makefile
-- [ ] 迁移jni的代码
+- [ ] 多工程项目测试
+- [ ] 测试一个较大的工程
+- [ ] 迁移jni的代码 : https://github.com/e1roy/jvmlocals
+- [ ] 打包gradle插件
