@@ -38,7 +38,7 @@ public class MethodArgsTest {
     }
 
     @Test
-    void staticBlock() {
+    void testClass() {
         var ctClass = classHelper.ctClass
         var ctClassStr = String.valueOf(ctClass)
         validate(ctClassStr)
