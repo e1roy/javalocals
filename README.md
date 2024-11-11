@@ -21,7 +21,7 @@ add(1, 2)
 ```java
     // 希望在 printLocals 中能够打印a,b,c的值
     public void add(int a, int b) {
-        int c = a + b;[DemoFile.java](javalocals-demo%2Fbuild%2Fgenerated-spoon%2Fcom%2Fgithub%2Fe1roy%2Ftest%2FDemoFile.java)
+        int c = a + b;
         printLocals();
         int d = 0;
     }
