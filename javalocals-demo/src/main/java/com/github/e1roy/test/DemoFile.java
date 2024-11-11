@@ -12,15 +12,16 @@ import java.util.stream.Collectors;
 public class DemoFile {
 
     static {
-        int a = 1;
-        printLocals();
-    }
-    {
-        int a = 1;
+        String a = "static block";
         printLocals();
     }
 
-    public void add(int a, int b, String... args) {
+    {
+        String a = "instance block";
+        printLocals();
+    }
+
+    public void add(int a, int b) {
         int c = a + b;
         printLocals();
         int d = 0;
@@ -182,8 +183,8 @@ public class DemoFile {
     }
 
     // #######################
-    public static void printLocals(Object ...args) {
-//        System.out.println("printLocals: " + Arrays.toString(args));
+    public static void printLocals(Object... args) {
+        System.out.println("printLocals: " + Arrays.toString(args));
     }
 
 }
