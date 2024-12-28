@@ -1,0 +1,11 @@
+pluginManagement {
+    repositories {
+        maven {
+            url uri('../local-plugin-repository') // Replace with path to local maven repository
+        }
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'javalocals-example'
+
