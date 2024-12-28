@@ -15,7 +15,7 @@ gradlePlugin {
             id = 'github.e1roy.javalocals'
             displayName = 'javalocals'
             description = 'A Gradle plugin that uses Spoon to transform Java source code, and then generates a new Java source file that contains the local variables of each method.'
-            tags.set(['spoon','javalocals'])
+            tags.set(['spoon', 'javalocals'])
             implementationClass = 'github.e1roy.JavaLocalsPlugin'
         }
     }
@@ -37,7 +37,7 @@ sourceSets {
     }
     test {
         java {
-            srcDirs = ['src/test/java',"src/functionalTest"]
+            srcDirs = ['src/test/java', "src/functionalTest"]
         }
         resources {
             srcDirs = ['src/test/resources']
@@ -103,12 +103,12 @@ tasks.named('test') {
     mustRunAfter tasks.named('taskA')
 }
 
-// 发布本地仓库
-//publishing {
-//    repositories {
-//        maven {
-//            name = 'localPluginRepository'
-//            url = file('../local-plugin-repository')
-//        }
-//    }
-//}
+// 发布本地仓库, 执行publish
+publishing {
+    repositories {
+        maven {
+            name = 'localPluginRepository'
+            url = file("${projectDir}/../local-plugin-repository") // 推荐使用项目相对路径
+        }
+    }
+}
