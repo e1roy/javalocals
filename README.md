@@ -16,6 +16,24 @@ add(1, 2)
 - 编译期间: `源代码.java` -> `修改后的源代码.java` -> `*.class`
 - jvmti运行时 : 调用jni接口, 获取当前函数的所有局部变量
 
+# 使用 
+```shell
+    plugins {
+        id 'java'
+        id 'github.e1roy.javalocals' version '0.0.1-test'
+    }
+    
+    javaLocals {
+        enable true        
+        compileOriginalSources false  
+        compliance 11                
+        processors = ['github.e1roy.JavaLocalsProcessor']  
+        fillMethodName = "printLocals"    
+    }
+```
+
+<img alt="source/img.png" height="600" src="img.png" width="800"/>
+
 # 代码示例
 1. 源代码
 ```java
@@ -48,10 +66,10 @@ add(1, 2)
 
 # TODO
 - [x] 增加测试用例
+- [x] 打包gradle插件
 - [ ] 多工程项目测试
 - [ ] 测试一个较大的工程
 - [ ] 迁移jni的代码 : https://github.com/e1roy/jvmlocals
-- [ ] 打包gradle插件
 
 # 技术栈
 - spoon : 源代码解析和修改
