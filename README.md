@@ -56,3 +56,14 @@ add(1, 2)
 # 技术栈
 - spoon : 源代码解析和修改
 - gradle : 插件
+
+# 发布
+```shell 发布检查
+ ./gradlew publishPlugins --validate-only
+```
+```shell 发布上产到仓库
+ ./gradlew publishPlugins
+```
+```shell 发布到本地仓库
+    ./gradlew publishToMavenLocal
+```

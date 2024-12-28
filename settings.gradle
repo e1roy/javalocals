@@ -1,3 +1,4 @@
 rootProject.name = 'javalocals'
-include 'javalocals-demo'
+//include 'javalocals-demo'
+include 'javalocals-gradle-plugin'
 

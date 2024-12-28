@@ -1,14 +1,14 @@
 apply plugin: 'java'
-apply plugin: 'spoon'
+//apply plugin: 'spoon'
 
-group = 'com.github.e1roy'
+group = 'github.e1roy'
 version = '1.0-SNAPSHOT'
 
 javaLocals {
     enable true         // Enable for this project (default: false)
     compileOriginalSources false    // Compile original sources (default: false)
     compliance 11                   // Compliance level (default: 7)
-    processors = ['com.github.e1roy.JavaLocalsProcessor']       // Processors (default: [])
+    processors = ['github.e1roy.JavaLocalsProcessor']       // Processors (default: [])
     fillMethodName = "printLocals"     // Fill methods (default: "")
 }
 

@@ -1,0 +1,114 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'groovy-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '1.2.1'
+}
+
+group = 'github.e1roy'
+version = '0.0.1-test'
+
+gradlePlugin {
+    website = 'https://github.com/e1roy/javalocals/'
+    vcsUrl = 'https://github.com/e1roy/javalocals/'
+    plugins {
+        javalocals {
+            id = 'github.e1roy.javalocals'
+            displayName = 'javalocals'
+            description = 'A Gradle plugin that uses Spoon to transform Java source code, and then generates a new Java source file that contains the local variables of each method.'
+            tags.set(['spoon','javalocals'])
+            implementationClass = 'github.e1roy.JavaLocalsPlugin'
+        }
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', "src/functionalTest"]
+        }
+        groovy {
+            srcDirs = ['src/main/groovy']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java',"src/functionalTest"]
+        }
+        resources {
+            srcDirs = ['src/test/resources']
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'fr.inria.gforge.spoon:spoon-core:10.1.0'
+    implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'com.google.guava:guava:33.3.1-jre'
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'com.google.truth:truth:1.4.4'
+
+    // Use JUnit test framework for unit tests
+//    testImplementation 'junit:junit:4.13'
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+
+// Add a source set and a task for a functional test suite
+def functionalTest = sourceSets.create('functionalTest')
+gradlePlugin.testSourceSets(functionalTest)
+
+configurations[functionalTest.implementationConfigurationName].extendsFrom(configurations.testImplementation)
+
+def functionalTestTask = tasks.register('functionalTest', Test) {
+    testClassesDirs = functionalTest.output.classesDirs
+    classpath = configurations[functionalTest.runtimeClasspathConfigurationName] + functionalTest.output
+}
+
+tasks.check.configure {
+    // Run the functional tests as part of `check`
+    dependsOn(functionalTestTask)
+}
+
+test {
+    useJUnitPlatform()
+}
+
+// 注册task, 在执行测试之前执行
+tasks.register('taskA') {
+    doLast {
+        println 'Executing taskA'
+        // 将javaresource目录下的文件复制到resources的目录下
+        copy {
+            from 'src/test/java/javaresource'
+            into 'src/test/resources/javaresource'
+        }
+    }
+}
+
+tasks.named('test') {
+    dependsOn tasks.named('taskA')
+    mustRunAfter tasks.named('taskA')
+}
+
+// 发布本地仓库
+//publishing {
+//    repositories {
+//        maven {
+//            name = 'localPluginRepository'
+//            url = file('../local-plugin-repository')
+//        }
+//    }
+//}
