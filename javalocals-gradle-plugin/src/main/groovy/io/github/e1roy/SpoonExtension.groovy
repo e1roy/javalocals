@@ -1,4 +1,4 @@
-package github.e1roy
+package io.github.e1roy
 
 import org.gradle.api.file.FileCollection
 import spoon.processing.Processor

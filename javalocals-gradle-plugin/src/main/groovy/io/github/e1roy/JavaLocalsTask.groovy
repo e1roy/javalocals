@@ -1,4 +1,4 @@
-package github.e1roy
+package io.github.e1roy
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.FileCollection

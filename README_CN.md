@@ -20,14 +20,14 @@ add(1, 2)
 ```shell
     plugins {
         id 'java'
-        id 'github.e1roy.javalocals' version '0.0.1-test'
+        id 'io.github.e1roy.javalocals' version '0.0.1-test'
     }
     
     javaLocals {
         enable true        
         compileOriginalSources false  
         compliance 11                
-        processors = ['github.e1roy.JavaLocalsProcessor']  
+        processors = ['io.github.e1roy.JavaLocalsProcessor']  
         fillMethodName = "printLocals"    
     }
 ```
@@ -80,8 +80,8 @@ add(1, 2)
  ./gradlew publishPlugins --validate-only
 ```
 ```shell 发布上产到仓库
- ./gradlew publishPlugins
+./gradlew publishPlugins
 ```
 ```shell 发布到本地仓库
-    ./gradlew publishToMavenLocal
+./gradlew publishToMavenLocal
 ```

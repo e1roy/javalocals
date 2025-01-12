@@ -1,4 +1,4 @@
-package github.e1roy
+package io.github.e1roy
 
 import javaresource.MethodArgsFile
 import org.junit.jupiter.api.AfterEach

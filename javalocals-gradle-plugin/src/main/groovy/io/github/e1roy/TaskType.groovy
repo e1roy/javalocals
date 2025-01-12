@@ -1,4 +1,4 @@
-package github.e1roy
+package io.github.e1roy
 
 enum TaskType {
     GENERATE, CHECK

@@ -4,19 +4,19 @@ plugins {
     id 'com.gradle.plugin-publish' version '1.2.1'
 }
 
-group = 'github.e1roy'
-version = '0.0.1-test'
+group = 'io.github.e1roy'
+version = '0.0.1'
 
 gradlePlugin {
     website = 'https://github.com/e1roy/javalocals/'
     vcsUrl = 'https://github.com/e1roy/javalocals/'
     plugins {
         javalocals {
-            id = 'github.e1roy.javalocals'
+            id = 'io.github.e1roy.javalocals'
             displayName = 'javalocals'
             description = 'A Gradle plugin that uses Spoon to transform Java source code, and then generates a new Java source file that contains the local variables of each method.'
             tags.set(['spoon', 'javalocals'])
-            implementationClass = 'github.e1roy.JavaLocalsPlugin'
+            implementationClass = 'io.github.e1roy.JavaLocalsPlugin'
         }
     }
 }

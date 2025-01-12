@@ -1,4 +1,4 @@
-package github.e1roy
+package io.github.e1roy
 
 import org.apache.commons.collections4.CollectionUtils
 import spoon.reflect.declaration.CtClass

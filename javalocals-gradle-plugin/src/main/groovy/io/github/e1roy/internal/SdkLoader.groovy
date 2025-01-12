@@ -1,4 +1,4 @@
-package github.e1roy.internal
+package io.github.e1roy.internal
 
 import org.gradle.api.Project
 

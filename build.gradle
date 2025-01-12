@@ -1,14 +1,8 @@
 apply plugin: 'java'
 //apply plugin: 'spoon'
 
-group = 'github.e1roy'
+group = 'io.github.e1roy'
 version = '1.0-SNAPSHOT'
-
-//spoon {
-//    compileOriginalSources false
-//    compliance 11
-//    processors = ['github.e1roy.JavaLocalsProcessor']
-//}
 
 repositories {
     maven {

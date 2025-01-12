@@ -26,14 +26,14 @@ To integrate **javalocals** into your Gradle project, follow these steps:
 ```gradle
 plugins {
     id 'java'
-    id 'github.e1roy.javalocals' version '0.0.1-test'
+    id 'io.github.e1roy.javalocals' version '0.0.1-test'
 }
 
 javaLocals {
     enable true        
     compileOriginalSources false 
     compliance 11                
-    processors = ['github.e1roy.JavaLocalsProcessor'] 
+    processors = ['io.github.e1roy.JavaLocalsProcessor'] 
     fillMethodName = "printLocals"    
 }
 ```

@@ -1,4 +1,4 @@
-package github.e1roy
+package io.github.e1roy
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project

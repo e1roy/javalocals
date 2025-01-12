@@ -1,13 +1,13 @@
-package github.e1roy;
+package io.github.e1roy;
 
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.*;
 import spoon.reflect.declaration.*;
 import spoon.reflect.path.CtRole;
-import spoon.reflect.reference.*;
+import spoon.reflect.reference.CtCatchVariableReference;
+import spoon.reflect.reference.CtVariableReference;
 import spoon.reflect.visitor.CtScanner;
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -21,10 +21,16 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtClass> {
     static String fillMethodName = "printLocals";
     static boolean showLineNumber = false;
 
+    /**
+     * it is a Spoon Processor, to read and transform java source code
+     */
     public JavaLocalsProcessor() {
-//        new RuntimeException().printStackTrace();
     }
 
+    /**
+     * method to fill the variables in the context
+     * @param fillMethodName    default is printLocals
+     */
     public void setFillMethodName(String fillMethodName) {
         this.fillMethodName = fillMethodName;
     }
@@ -33,9 +39,11 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtClass> {
     public void process(CtClass ctClass) {
         count++;
         ctClass.accept(new VariableCollectorVisitor());
-//        System.out.println(ctClass);
     }
 
+    /**
+     * @param clazz class to be processed
+     */
     public void processCtClassForTest(CtClass clazz) {
         process(clazz);
     }
@@ -75,7 +83,6 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtClass> {
             super.visitCtLocalVariable(localVariable);
             addVariable(localVariable.getReference());
         }
-
 
 
         @Override
@@ -121,7 +128,6 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtClass> {
                 exit(tryWithResource);
             });
         }
-
 
 
         @Override

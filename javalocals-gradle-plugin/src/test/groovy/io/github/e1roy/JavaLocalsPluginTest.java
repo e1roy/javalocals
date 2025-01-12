@@ -1,4 +1,4 @@
-package github.e1roy;
+package io.github.e1roy;
 
 import org.gradle.api.Project;
 import org.gradle.api.internal.project.ProjectInternal;
@@ -19,7 +19,7 @@ public class JavaLocalsPluginTest {
         // Create a test project and apply the plugin
         Project project = ProjectBuilder.builder().build();
         project.getPlugins().apply("java");
-        project.getPlugins().apply("github.e1roy.javalocals");
+        project.getPlugins().apply("io.github.e1roy.javalocals");
 
         // 模拟增加配置文件
         project.getExtensions().getByName("javaLocals"); // 获取插件扩展对象
@@ -29,7 +29,7 @@ public class JavaLocalsPluginTest {
                 javaLocals.getClass().getMethod("setCompileOriginalSources", boolean.class).invoke(javaLocals, false);
                 javaLocals.getClass().getMethod("setCompliance", int.class).invoke(javaLocals, 11);
 //                javaLocals.getClass().getMethod("setProcessors", List.class).invoke(javaLocals,
-//                        List.of("github.e1roy.JavaLocalsProcessor"));
+//                        List.of("io.github.e1roy.JavaLocalsProcessor"));
                 javaLocals.getClass().getMethod("setFillMethodName", String.class).invoke(javaLocals, "printLocals");
             } catch (Exception e) {
                 e.printStackTrace();
