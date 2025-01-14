@@ -1,17 +1,17 @@
 
 plugins {
     id 'java'
-    id 'github.e1roy.javalocals' version '0.0.1-test'
+    id 'github.e1roy.javalocals' version '0.0.1'
 }
 
-group = 'github.e1roy.javalocals.example'
+group = 'io.github.e1roy.javalocals.example'
 version = '1.0-SNAPSHOT'
 
 javaLocals {
     enable true         // Enable for this project (default: false)
     compileOriginalSources false    // Compile original sources (default: false)
     compliance 11                   // Compliance level (default: 7)
-    processors = ['github.e1roy.JavaLocalsProcessor']       // Processors (default: [])
+    processors = ['io.github.e1roy.JavaLocalsProcessor']       // Processors (default: [])
     fillMethodName = "printLocals"     // Fill methods (default: "")
 }
 
