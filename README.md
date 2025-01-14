@@ -82,7 +82,7 @@ public void testAdd() {
 ```
 
 ### TODO
-
+- [ ] not change source code line number
 - [x] Implement test cases.
 - [x] Package the plugin for distribution.
 - [ ] Test the plugin in multi-module projects.
