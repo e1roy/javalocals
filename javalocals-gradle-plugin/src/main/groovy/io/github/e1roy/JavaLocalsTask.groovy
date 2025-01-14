@@ -5,7 +5,7 @@ import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.*
 import org.gradle.work.FileChange
 import org.gradle.work.InputChanges
-import spoon.Launcher
+import spoon.support.sniper.SniperJavaPrettyPrinter
 
 class JavaLocalsTask extends DefaultTask {
 
@@ -115,6 +115,9 @@ class JavaLocalsTask extends DefaultTask {
 
         def launcher = new JavaLocalsSpoonLauncher()
         launcher.setFillMethodName(this.fillMethodName)
+        var env = launcher.getEnvironment();
+        // 			return new SniperJavaPrettyPrinter(spoon.getEnvironment());
+        env.setPrettyPrinterCreator(() -> new SniperJavaPrettyPrinter(env));
         launcher.setArgs(params.toArray(new String[params.size()]))
         launcher.run()
         Thread.sleep(1 * 1000)
