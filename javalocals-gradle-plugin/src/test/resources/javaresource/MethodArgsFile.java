@@ -24,6 +24,8 @@ public class MethodArgsFile {
         int c = a + b;
         printLocals();
         validateXXX("a", a, "b", b, "args", args, "c", c);
+
+
         int d = 0;
     }
 
