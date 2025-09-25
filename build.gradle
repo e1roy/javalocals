@@ -19,3 +19,18 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8' // 或 'GBK'，取决于你的源码实际编码
+}
+
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8' // 或 'GBK'
+}
+
+javadoc {
+    options {
+        encoding = 'UTF-8'
+        charSet = 'UTF-8'
+    }
+}

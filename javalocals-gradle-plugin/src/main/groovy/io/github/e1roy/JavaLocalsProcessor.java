@@ -79,7 +79,7 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtClass> {
 
         @Override
         public <T> void visitCtLocalVariable(CtLocalVariable<T> localVariable) {
-            // 循环遍历, 先访问变量,后访问block,并且block中能访问这个变量.
+            // Loop iteration: visit variable first, then block, and the variable is accessible in the block.
             super.visitCtLocalVariable(localVariable);
             addVariable(localVariable.getReference());
         }
@@ -113,8 +113,8 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtClass> {
         @Override
         public void visitCtTryWithResource(CtTryWithResource tryWithResource) {
             backUpAndRecover(() -> {
-                // 不能直接调用super.visitCtTryWithResource(tryWithResource);
-                // try的变量在catch中是不可见的, 这里hook一下函数. 临时处理访问. 可以work
+                // Cannot directly call super.visitCtTryWithResource(tryWithResource);
+                // Variables in try block are not visible in catch block, hook the function here for temporary processing. This workaround works.
 //                super.visitCtTryWithResource(tryWithResource);
                 enter(tryWithResource);
                 scan(CtRole.ANNOTATION, tryWithResource.getAnnotations());
@@ -166,12 +166,12 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtClass> {
             if (invocation.getExecutable().getSimpleName().equals(fillMethodName)) {
                 // Set arguments to the variables currently in scope
                 List<CtExpression<?>> args = new ArrayList<>();
-                // 添加当前代码的行号作为第一个参数
+                // Add current line number as the first argument
                 if (showLineNumber) {
                     args.add(invocation.getFactory().Code().createLiteral(invocation.getPosition().getLine()));
                 }
                 for (CtVariableReference<?> varRef : variablesInScope) {
-                    // 获取变量名称
+                    // Get variable name
                     String simpleName = varRef.getSimpleName();
                     args.add(invocation.getFactory().Code().createLiteral(simpleName));
                     args.add(invocation.getFactory().Code().createVariableRead(varRef, false));
@@ -202,10 +202,10 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtClass> {
         }
 
         public void backUpAndRecover(Runnable run) {
-            // 备份variablesInScope
+            // Backup variablesInScope
             List<CtVariableReference<?>> variablesBeforeBlock = new ArrayList<>(variablesInScope);
             run.run();
-            // 恢复variablesInScope
+            // Restore variablesInScope
             variablesInScope = variablesBeforeBlock;
         }
     }
