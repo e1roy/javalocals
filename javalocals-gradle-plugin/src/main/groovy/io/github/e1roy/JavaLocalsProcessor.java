@@ -5,6 +5,7 @@ import spoon.reflect.code.*;
 import spoon.reflect.declaration.*;
 import spoon.reflect.path.CtRole;
 import spoon.reflect.reference.CtCatchVariableReference;
+import spoon.reflect.reference.CtTypeReference;
 import spoon.reflect.reference.CtVariableReference;
 import spoon.reflect.visitor.CtScanner;
 
@@ -81,6 +82,38 @@ public class JavaLocalsProcessor extends AbstractProcessor<CtClass> {
         public <T> void visitCtLocalVariable(CtLocalVariable<T> localVariable) {
             // Loop iteration: visit variable first, then block, and the variable is accessible in the block.
             super.visitCtLocalVariable(localVariable);
+            if (localVariable.getType().isPrimitive() && localVariable.getDefaultExpression() == null && !(localVariable.getParent() instanceof CtForEach)) {
+                String typeName = localVariable.getType().getSimpleName();
+                switch (typeName) {
+                    case "int":
+                        ((CtVariable<Integer>) localVariable).setDefaultExpression(localVariable.getFactory().Code().createLiteral(0));
+                        break;
+                    case "boolean":
+                        ((CtVariable<Boolean>) localVariable).setDefaultExpression(localVariable.getFactory().Code().createLiteral(false));
+                        break;
+                    case "double":
+                        ((CtVariable<Double>) localVariable).setDefaultExpression(localVariable.getFactory().Code().createLiteral(0.0));
+                        break;
+                    case "float":
+                        ((CtVariable<Float>) localVariable).setDefaultExpression(localVariable.getFactory().Code().createLiteral(0.0f));
+                        break;
+                    case "long":
+                        ((CtVariable<Long>) localVariable).setDefaultExpression(localVariable.getFactory().Code().createLiteral(0L));
+                        break;
+                    case "short":
+                        ((CtVariable<Short>) localVariable).setDefaultExpression(localVariable.getFactory().Code().createLiteral((short) 0));
+                        break;
+                    case "byte":
+                        ((CtVariable<Byte>) localVariable).setDefaultExpression(localVariable.getFactory().Code().createLiteral((byte) 0));
+                        break;
+                    case "char":
+                        ((CtVariable<Character>) localVariable).setDefaultExpression(localVariable.getFactory().Code().createLiteral('\u0000'));
+                        break;
+                }
+            } else if (localVariable.getDefaultExpression() == null && !(localVariable.getParent() instanceof CtForEach)) {
+                // Object types → assign null
+                ((CtVariable<Object>) localVariable).setDefaultExpression(localVariable.getFactory().Code().createLiteral(null));
+            }
             addVariable(localVariable.getReference());
         }
 
