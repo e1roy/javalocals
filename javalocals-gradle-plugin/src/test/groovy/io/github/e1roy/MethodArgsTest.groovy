@@ -140,24 +140,28 @@ public class MethodArgsTest {
 
 
     static void validate(String data) {
-        String[] arr = data.split("\r\n")
+        String[] arr = data.split("\\r\\n")
         for (var i = 0; i < arr.size(); i++) {
             String line = arr[i].trim()
-            // println "line: $line"
             if (line.contains("printLocals(\"")) {
-                println line
                 if (i + 1 < arr.size()) {
                     String nextLine = arr[i + 1].trim()
-                    println(nextLine)
-                    if (nextLine.startsWith("validateXXX(\"")) {
-                        // 比较两个方法的参数是否一致
-                        if (!Objects.equals(line, nextLine.replace("validateXXX", "printLocals"))) {
-                            throw new RuntimeException("validate failed, line: \n ${line} -> \n ${nextLine} \n")
-                        }
+                    // 提取参数列表进行比较
+                    println "line: $line"
+                    println("nextLine " + nextLine)
+                    String printLocalsParams = line.substring(line.indexOf("\"") + 1, line.lastIndexOf("\""))
+                    String validateXXXParams = nextLine.substring(nextLine.indexOf("\"") + 1, nextLine.lastIndexOf("\""))
+
+                    println "printLocalsParams: $printLocalsParams"
+                    println "validateXXXParams: $validateXXXParams"
+
+                    if (!Objects.equals(printLocalsParams, validateXXXParams)) {
+                        throw new RuntimeException("validate failed, line: \n ${line} -> \n ${nextLine} \n")
                     }
                 }
             }
         }
     }
+
 
 }
